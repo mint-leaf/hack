@@ -7,16 +7,16 @@ import json
 
 
 # 根据数字生成带数字的二维码
-def generate_qrcode_with_num(id_, item_id, next_item_id, required):
+def generate_qrcode_with_num(step_id, next_item_id, product_id, item_id):
     file_name = generate_num_pic(item_id)
-    file_gen = r"qrcodes/qrcode" + str(item_id) + r".jpg"
+    file_gen = "qrcodes\\qrcode" + str(item_id) + r".jpg"
     if os.path.exists(file_gen):
         return file_gen
     myqr.run(base64.b64encode(json.dumps({
-        "id": id_,
-        "item_id": item_id,
+        "step_id": step_id,
         "next_items": next_item_id,
-        "required": required
+        "product_id": product_id,
+        "item_id": item_id
     }).encode("utf-8")).decode(), version=4, level='M',
              picture=file_name, save_name=file_gen)
     return file_gen
@@ -24,7 +24,7 @@ def generate_qrcode_with_num(id_, item_id, next_item_id, required):
 
 # 生成数字图片
 def generate_num_pic(num):
-    file_name = r"nums/" + str(num) + r".jpg"
+    file_name = "nums\\" + str(num) + r".jpg"
     if os.path.exists(file_name):
         return file_name
     width, height = 50, 50
@@ -38,4 +38,8 @@ def generate_num_pic(num):
 
 
 if __name__ == "__main__":
-    generate_qrcode_with_num(1, 2, 3, 2)
+    generate_qrcode_with_num(0, 1, 1, 0)
+    generate_qrcode_with_num(1, 2, 1, 1)
+    generate_qrcode_with_num(2, 3, 1, 2)
+    generate_qrcode_with_num(3, 5, 1, 3)
+    generate_qrcode_with_num(4, 6, 1, 4)
